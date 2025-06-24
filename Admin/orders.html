@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- ✅ Simple Top Bar -->
+  <header class="bg-blue-800 text-white py-4 shadow-md text-center">
+    <h2 class="text-2xl font-bold">Admin Dashboard</h2>
+  </header>
+
+  <!-- ✅ Simple Tab Menu -->
+  <div class="flex justify-center space-x-4 mt-6">
+    <button id="tab-reservations" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Reservations</button>
+    <button id="tab-orders" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">Orders</button>
+  </div>
+
+  <!-- ✅ Reservation Table -->
+  <div id="reservations-section" class="container mx-auto p-4 mt-6">
+    <h3 class="text-xl font-semibold mb-4">Reservation Records</h3>
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-blue-700 text-white">
+          <tr>
+            <th class="px-4 py-2 text-left">Name</th>
+            <th class="px-4 py-2 text-left">Contact</th>
+            <th class="px-4 py-2 text-left">Email</th>
+            <th class="px-4 py-2 text-left">Date</th>
+            <th class="px-4 py-2 text-left">Time</th>
+            <th class="px-4 py-2 text-left">Party Size</th>
+          </tr>
+        </thead>
+        <tbody id="reservations-body" class="divide-y divide-gray-200 bg-white">
+          <!-- Reservation data will go here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ✅ Orders Table -->
+  <div id="orders-section" class="container mx-auto p-4 mt-6 hidden">
+    <h3 class="text-xl font-semibold mb-4">Customer Orders</h3>
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-green-700 text-white">
+          <tr>
+            <th class="px-4 py-2 text-left">Name</th>
+            <th class="px-4 py-2 text-left">Contact</th>
+            <th class="px-4 py-2 text-left">Address</th>
+            <th class="px-4 py-2 text-left">Item</th>
+            <th class="px-4 py-2 text-left">Qty</th>
+            <th class="px-4 py-2 text-left">Price</th>
+            <th class="px-4 py-2 text-left">Subtotal</th>
+            <th class="px-4 py-2 text-left">Order No.</th>
+          </tr>
+        </thead>
+        <tbody id="orders-body" class="divide-y divide-gray-200 bg-white">
+          <!-- Order data will go here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ✅ Script for Tabs + Fetch -->
+  <script>
+    const tabReservations = document.getElementById('tab-reservations');
+    const tabOrders = document.getElementById('tab-orders');
+    const sectionReservations = document.getElementById('reservations-section');
+    const sectionOrders = document.getElementById('orders-section');
+
+    tabReservations.onclick = () => {
+      sectionReservations.classList.remove('hidden');
+      sectionOrders.classList.add('hidden');
+    };
+
+    tabOrders.onclick = () => {
+      sectionOrders.classList.remove('hidden');
+      sectionReservations.classList.add('hidden');
+    };
+
+    // Load Reservations
+    fetch('http://localhost:3000/api/reservations')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('reservations-body');
+        data.forEach(r => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="px-4 py-2">${r.name}</td>
+            <td class="px-4 py-2">${r.contact}</td>
+            <td class="px-4 py-2">${r.email}</td>
+            <td class="px-4 py-2">${r.date}</td>
+            <td class="px-4 py-2">${r.time}</td>
+            <td class="px-4 py-2">${r.partysize}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error("Reservation fetch error:", err);
+        alert("❌ Failed to load reservations.");
+      });
+
+    // Load Orders
+    fetch('http://localhost:3000/api/orderRoutes')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('orders-body');
+        data.forEach(o => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="px-4 py-2">${o.name}</td>
+            <td class="px-4 py-2">${o.cell_number}</td>
+            <td class="px-4 py-2">${o.address}</td>
+            <td class="px-4 py-2">${o.item_name}</td>
+            <td class="px-4 py-2">${o.quantity}</td>
+            <td class="px-4 py-2">$${o.price}</td>
+            <td class="px-4 py-2">$${o.subtotal}</td>
+            <td class="px-4 py-2">${o.order_number}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error("Order fetch error:", err);
+        alert("❌ Failed to load orders.");
+      });
+  </script>
+
+</body>
+</html>
