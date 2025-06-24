@@ -1,0 +1,27 @@
+Following are the details of Your First Project:
+You have to Develop a website for Adrian Venoin for his Restaurant.
+
+Restaurant Name :        Banquet Grill
+Type of Restaurant :      Fast Food Restaurant
+Address :                         297 London Road, Hadleigh, Benfleet, Essex, SS7 2DD
+Opening hours :             1:00 PM to 11:00 PM (7 days a week)
+Contact No:                     0141 611 1928
+Owner/Customer Name : Mr. Adrian Venoin
+Customer email:            clearbusinessbyadrian@gmail.com
+Online order email:        SAME
+Trading Since :                OCTOBER 2023
+Tag Line About Restaurant : The Tasty House
+
+NOTE: THE WEBSITE SHOULD HAVE FOLLOWING PAGES:
+1) Restaurant Homepage
+2) Restaurant Opening Hours Page
+3) About Us
+4) Contact Us
+5) Our Menu & Pricing (Leave this page empty)
+6) Footer
+
+Sample Website: https://yammbuffet.com
+
+
+NOTE:
+Please use dummy content/data for meanwhile (in About Us) from Google & will provide u as we get it from the customer.
